@@ -1,4 +1,16 @@
-<script setup></script>
+<script setup>
+import { reactive } from "vue";
+
+const formData = reactive({
+  pet: "",
+  person: "",
+  email: "",
+  dischargedAt: "",
+  symptoms: "",
+});
+
+const sendForm = () => {};
+</script>
 
 <template>
   <div class="md:w-1/2">
@@ -9,7 +21,10 @@
       <span class="text-indigo-600 font-bold">Adminístralos</span>
     </p>
 
-    <form class="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
+    <form
+      class="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
+      @submit.prevent="sendForm"
+    >
       <div class="mb-5">
         <label for="pet" class="block text-gray-700 uppercase font-bold"
           >Nombre mascota</label
@@ -19,6 +34,7 @@
           type="text"
           placeholder="Nombre de la mascota"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+          v-model="formData.pet"
         />
       </div>
 
@@ -31,6 +47,7 @@
           type="text"
           placeholder="Nombre del dueño"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+          v-model="formData.person"
         />
       </div>
 
@@ -43,17 +60,21 @@
           type="text"
           placeholder="Correo electrónico"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+          v-model="formData.email"
         />
       </div>
 
       <div class="mb-5">
-        <label for="discharge" class="block text-gray-700 uppercase font-bold"
+        <label
+          for="dischargedAt"
+          class="block text-gray-700 uppercase font-bold"
           >Fecha de alta</label
         >
         <input
-          id="discharge"
+          id="dischargedAt"
           type="date"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+          v-model="formData.dischargedAt"
         />
       </div>
 
@@ -65,6 +86,7 @@
           id="symptoms"
           placeholder="Describe los síntomas del paciente"
           class="h-30 border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
+          v-model="formData.symptoms"
         ></textarea>
       </div>
 
