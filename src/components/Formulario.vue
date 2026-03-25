@@ -1,5 +1,11 @@
 <script setup>
 import { reactive } from "vue";
+import Alert from "./Alert.vue";
+
+const alert = reactive({
+  type: "",
+  message: "",
+});
 
 const formData = reactive({
   pet: "",
@@ -9,7 +15,13 @@ const formData = reactive({
   symptoms: "",
 });
 
-const sendForm = () => {};
+const sendForm = () => {
+  if (Object.values(formData).includes("")) {
+    alert.message = "Todos los campos son obligatorios";
+    alert.type = "error";
+    return;
+  }
+};
 </script>
 
 <template>
@@ -20,6 +32,8 @@ const sendForm = () => {};
       Añade Pacientes y
       <span class="text-indigo-600 font-bold">Adminístralos</span>
     </p>
+
+    <Alert v-if="alert.message" :message="alert.message" :type="alert.type" />
 
     <form
       class="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
