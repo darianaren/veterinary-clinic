@@ -7,16 +7,39 @@ const alert = reactive({
   message: "",
 });
 
-const formData = reactive({
-  pet: "",
-  person: "",
-  email: "",
-  dischargedAt: "",
-  symptoms: "",
+defineEmits([
+  "update:pet",
+  "update:person",
+  "update:email",
+  "update:dischargedAt",
+  "update:symptoms",
+]);
+
+const props = defineProps({
+  pet: {
+    type: String,
+    required: true,
+  },
+  person: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  dischargedAt: {
+    type: String,
+    required: true,
+  },
+  symptoms: {
+    type: String,
+    required: true,
+  },
 });
 
 const sendForm = () => {
-  if (Object.values(formData).includes("")) {
+  if (Object.values(props).includes("")) {
     alert.message = "Todos los campos son obligatorios";
     alert.type = "error";
     return;
@@ -48,7 +71,8 @@ const sendForm = () => {
           type="text"
           placeholder="Nombre de la mascota"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-          v-model="formData.pet"
+          :value="pet"
+          @input="$emit('update:pet', $event.target.value)"
         />
       </div>
 
@@ -61,7 +85,8 @@ const sendForm = () => {
           type="text"
           placeholder="Nombre del dueño"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-          v-model="formData.person"
+          :value="person"
+          @input="$emit('update:person', $event.target.value)"
         />
       </div>
 
@@ -74,7 +99,8 @@ const sendForm = () => {
           type="text"
           placeholder="Correo electrónico"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-          v-model="formData.email"
+          :value="email"
+          @input="$emit('update:email', $event.target.value)"
         />
       </div>
 
@@ -88,7 +114,8 @@ const sendForm = () => {
           id="dischargedAt"
           type="date"
           class="border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-          v-model="formData.dischargedAt"
+          :value="dischargedAt"
+          @input="$emit('update:dischargedAt', $event.target.value)"
         />
       </div>
 
@@ -100,7 +127,8 @@ const sendForm = () => {
           id="symptoms"
           placeholder="Describe los síntomas del paciente"
           class="h-30 border-2 border-gray-300 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-          v-model="formData.symptoms"
+          :value="symptoms"
+          @input="$emit('update:symptoms', $event.target.value)"
         ></textarea>
       </div>
 
