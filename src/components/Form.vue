@@ -47,6 +47,13 @@ const sendForm = () => {
   }
 
   emit("save-patient");
+  alert.message = "Paciente agregado correctamente";
+  alert.type = "success";
+
+  setTimeout(() => {
+    alert.message = "";
+    alert.type = "";
+  }, 3000);
 };
 </script>
 
