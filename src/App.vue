@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive } from "vue";
-import Formulario from "./components/Formulario.vue";
+import Form from "./components/Form.vue";
 import Header from "./components/Header.vue";
 
 const patients = ref([]);
@@ -27,7 +27,7 @@ const savePatient = () => {
   <div class="container mx-auto my-20">
     <Header />
     <div class="mt-12 md:flex">
-      <Formulario
+      <Form
         v-model:pet="formData.pet"
         v-model:person="formData.person"
         v-model:email="formData.email"
