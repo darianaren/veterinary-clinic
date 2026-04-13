@@ -37,6 +37,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  editingPatient: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const sendForm = () => {
@@ -47,7 +51,9 @@ const sendForm = () => {
   }
 
   emit("save-patient");
-  alert.message = "Paciente agregado correctamente";
+  alert.message = props.editingPatient
+    ? "Paciente actualizado correctamente"
+    : "Paciente agregado correctamente";
   alert.type = "success";
 
   setTimeout(() => {
@@ -145,7 +151,7 @@ const sendForm = () => {
       <input
         type="submit"
         class="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-700 cursor-pointer transition-colors"
-        value="Registrar Paciente"
+        :value="editingPatient ? 'Guardar Cambios' : 'Registrar Paciente'"
       />
     </form>
   </div>

@@ -5,6 +5,7 @@ import Header from "./components/Header.vue";
 import Patient from "./components/Patient.vue";
 
 const patients = ref([]);
+const editingPatient = ref(false);
 
 const formData = reactive({
   pet: "",
@@ -15,12 +16,30 @@ const formData = reactive({
 });
 
 const savePatient = () => {
-  patients.value.push({ ...formData, id: Date.now().toString() });
+  if (editingPatient.value) {
+    const patientIndex = patients.value.findIndex(
+      (patient) => patient.id === formData.id,
+    );
+    patients.value[patientIndex] = { ...formData };
+    editingPatient.value = false;
+  } else {
+    patients.value.push({ ...formData, id: Date.now().toString() });
+  }
   formData.pet = "";
   formData.person = "";
   formData.email = "";
   formData.dischargedAt = "";
   formData.symptoms = "";
+};
+
+const editPatient = (id) => {
+  const patient = patients.value.find((patient) => patient.id === id);
+  Object.assign(formData, patient);
+  editingPatient.value = true;
+};
+
+const deletePatient = (id) => {
+  patients.value = patients.value.filter((patient) => patient.id !== id);
 };
 </script>
 
@@ -34,6 +53,7 @@ const savePatient = () => {
         v-model:email="formData.email"
         v-model:dischargedAt="formData.dischargedAt"
         v-model:symptoms="formData.symptoms"
+        :editingPatient="editingPatient"
         @save-patient="savePatient"
       />
       <div class="md:w-1/2 md:h-full">
@@ -57,6 +77,8 @@ const savePatient = () => {
             :email="patient.email"
             :dischargedAt="patient.dischargedAt"
             :symptoms="patient.symptoms"
+            @edit-patient="editPatient"
+            @delete-patient="deletePatient"
           />
         </div>
         <p v-else class="mt-10 text-2xl text-center">No hay pacientes.</p>
