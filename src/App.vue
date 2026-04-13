@@ -12,6 +12,15 @@ const formData = reactive({
   dischargedAt: "",
   symptoms: "",
 });
+
+const savePatient = () => {
+  patients.value.push({ ...formData });
+  formData.pet = "";
+  formData.person = "";
+  formData.email = "";
+  formData.dischargedAt = "";
+  formData.symptoms = "";
+};
 </script>
 
 <template>
@@ -24,6 +33,7 @@ const formData = reactive({
         v-model:email="formData.email"
         v-model:dischargedAt="formData.dischargedAt"
         v-model:symptoms="formData.symptoms"
+        @save-patient="savePatient"
       />
       <div class="md:w-1/2 md:h-screen overflow-y-scroll">
         <h3 class="font-black text-3xl text-center">

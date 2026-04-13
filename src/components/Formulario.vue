@@ -7,12 +7,13 @@ const alert = reactive({
   message: "",
 });
 
-defineEmits([
+const emit = defineEmits([
   "update:pet",
   "update:person",
   "update:email",
   "update:dischargedAt",
   "update:symptoms",
+  "save-patient",
 ]);
 
 const props = defineProps({
@@ -44,6 +45,8 @@ const sendForm = () => {
     alert.type = "error";
     return;
   }
+
+  emit("save-patient");
 };
 </script>
 
