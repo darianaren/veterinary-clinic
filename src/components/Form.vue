@@ -62,7 +62,7 @@ const sendForm = () => {
     <Alert v-if="alert.message" :message="alert.message" :type="alert.type" />
 
     <form
-      class="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
+      class="bg-white shadow-md rounded-lg py-10 px-5"
       @submit.prevent="sendForm"
     >
       <div class="mb-5">

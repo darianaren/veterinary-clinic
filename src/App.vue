@@ -2,6 +2,7 @@
 import { ref, reactive } from "vue";
 import Form from "./components/Form.vue";
 import Header from "./components/Header.vue";
+import Patient from "./components/Patient.vue";
 
 const patients = ref([]);
 
@@ -14,7 +15,7 @@ const formData = reactive({
 });
 
 const savePatient = () => {
-  patients.value.push({ ...formData });
+  patients.value.push({ ...formData, id: Date.now().toString() });
   formData.pet = "";
   formData.person = "";
   formData.email = "";
@@ -35,12 +36,29 @@ const savePatient = () => {
         v-model:symptoms="formData.symptoms"
         @save-patient="savePatient"
       />
-      <div class="md:w-1/2 md:h-screen overflow-y-scroll">
-        <h3 class="font-black text-3xl text-center">
+      <div class="md:w-1/2 md:h-full">
+        <h2 class="font-black text-3xl text-center">
           Administra tus Pacientes
-        </h3>
+        </h2>
 
-        <div v-if="patients.length > 0"></div>
+        <p class="text-lg mt-5 text-center mb-10">
+          Información de
+          <span class="text-indigo-600 font-bold">los pacientes</span>
+        </p>
+        <div
+          v-if="patients.length > 0"
+          class="max-h-171.75 overflow-hidden overflow-y-scroll"
+        >
+          <Patient
+            v-for="patient in patients"
+            :id="patient.id"
+            :pet="patient.pet"
+            :person="patient.person"
+            :email="patient.email"
+            :dischargedAt="patient.dischargedAt"
+            :symptoms="patient.symptoms"
+          />
+        </div>
         <p v-else class="mt-10 text-2xl text-center">No hay pacientes.</p>
       </div>
     </div>
